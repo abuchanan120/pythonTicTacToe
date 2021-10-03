@@ -58,8 +58,8 @@ def make_list_of_free_fields(board):
     list = []
     for i in range(len(board)):
         for k in range(len(board[i])):
-            if (board[i][k] != 'O') & (board[i][k] != 'X'):
-                list.append((int(i), int(k)))
+            if (board[i][k] != 'O') & (board[i][k] != 'X'):     #if space is free,
+                list.append((int(i), int(k)))                   #add coordinates to list.
 
 
 def victory_for(board, sign):
@@ -128,26 +128,26 @@ def draw_move(board):
     make_list_of_free_fields(board)
     if count < 9:
         draw = int(randrange(1, 10))
-        if draw == 5:
+        if draw == 5:               #if it chooses the middle slot again, re-run the function.
             draw_move(board)
         elif draw <= 3:
-            if (board[0][draw - 1] != 'X') & (board[0][draw - 1] != 'O'):
+            if (board[0][draw - 1] != 'X') & (board[0][draw - 1] != 'O'): #top row
                 board[0][draw - 1] = 'X'
                 count += 1
             else:
-                draw_move(board)
+                draw_move(board)    #if spot isn't free, re-run function
         elif draw <= 6:
-            if (board[1][draw - 4] != 'X') & (board[1][draw - 4] != 'O'):
+            if (board[1][draw - 4] != 'X') & (board[1][draw - 4] != 'O'): #middle row
                 board[1][draw - 4] = 'X'
                 count += 1
             else:
-                draw_move(board)
+                draw_move(board)    #if spot isn't free, re-run function
         else:
-            if (board[2][draw - 7] != 'X') & (board[2][draw - 7] != 'O'):
+            if (board[2][draw - 7] != 'X') & (board[2][draw - 7] != 'O'): #bottom row
                 board[2][draw - 7] = 'X'
                 count += 1
             else:
-                draw_move(board)
+                draw_move(board)    #if spot isn't free, re-run function
         display_board(board)
 
 
@@ -158,17 +158,17 @@ if __name__ == "__main__":
     display_board(gameboard)
     while (count < 9) | (winner == 0):
         if count % 2 != 0:
-            enter_move(gameboard)
-        else:
+            enter_move(gameboard)   #if the computer went last (odd count variable) user goes next
+        else:                       #else (even count variable) it is computer's turn
             if winner != 1:
                 draw_move(gameboard)
             else:
                 break
-        if count >= 5:
-            victory_for(gameboard, 'X')
+        if count >= 5:              #once the computer has taken 3 turns, begin checking each round for the winner
+            victory_for(gameboard, 'X') #check if computer wins
             if winner == 1:
                 break
-            else:
+            else:                       #check if user wins if computer didn't win
                 victory_for(gameboard, 'O')
                 if winner == 1:
                     break
